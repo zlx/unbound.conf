@@ -1,6 +1,11 @@
 @ECHO OFF
-REM STOP DNS
-localdns-stop
+REM STOP DNSCrypt
+taskkill /IM dnscrypt-proxy.exe /F
 
-REM START DNS
-localdns
+ipconfig /flushdns
+
+REM START DNSCrypt
+nircmd.exe exec2 hide "%~dp0\dnscrypt-proxy\" "%~dp0\dnscrypt-proxy\dnscrypt-proxy.exe" dnscrypt-proxy-cisco.conf
+
+REM RESTART DNS
+nircmd.exe exec2 hide "%~dp0/unbound" "%~dp0/unbound/unbound-control.exe" -c unbound.conf reload

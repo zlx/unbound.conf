@@ -3,6 +3,6 @@ REM STOP DNSCrypt
 taskkill /IM dnscrypt-proxy.exe /F
 
 REM STOP Unbound
-taskkill /IM unbound.exe /F
+nircmd.exe exec2 hide "%~dp0/unbound" "%~dp0/unbound/unbound-control.exe" -c unbound.conf stop
 
 ipconfig /flushdns
