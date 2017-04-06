@@ -11,14 +11,14 @@ def is_ipv6_addr(addr):
 path = sys.path[0]
 
 # host 文件列表，如果有相同的域名，选择后面出现的host的地址
-confit_host_file = [
+config_host_file = [
     'https://raw.githubusercontent.com/racaljk/hosts/master/hosts',
     'https://raw.githubusercontent.com/lennylxx/ipv6-hosts/master/hosts'
     ]
 
 # 逐个下载hosts，并保存
 hosts = {}
-for hostsUrl in confit_host_file:
+for hostsUrl in config_host_file:
     hostsText = requests.get(hostsUrl).text;
     hostText = re.split('\n|\r\n', hostsText)
     for ipvx_host in hostText:
@@ -46,3 +46,30 @@ for host in hosts.items():
         fd.write('local-data: "' + host[0] + ' A ' + host[1] + '"\n')
 
 fd.close();
+
+
+# black list 到 unbound.local-zone.blacklist.domains.conf
+config_host_file = [
+    'https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts'
+    ]
+hosts = {}
+for hostsUrl in config_host_file:
+    hostsText = requests.get(hostsUrl).text;
+    hostText = re.split('\n|\r\n', hostsText)
+    for ipvx_host in hostText:
+        if ipvx_host != '' and ipvx_host[0] != '#':
+            ip_domain = ipvx_host.split()
+            if ip_domain[1] != 'localhost':
+                hosts[ip_domain[1]] = ip_domain[0]
+
+# 把hosts写入到配置文件中
+fd = open(path + os.path.sep + "unbound.local-zone.blacklist.domains.conf",'w')
+fd.write('# Converted from https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts\n')
+fd.write('# https://github.com/StevenBlack/hosts\n')
+fd.write('# Thanks to all contributors.\n\n')
+
+for host in hosts.items():
+    if host[1] == '0.0.0.0':
+        fd.write('local-zone: "'+ host[0] +'" always_refuse\n')
+
+fd.close();				
