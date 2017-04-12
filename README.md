@@ -1,10 +1,13 @@
+# 放弃
+偶尔会遇到一些奇怪的问题，不知道跟unbound有没有关系,还是直接替换提供host简单粗暴。
+
 # unbound.conf
 
 ![unbound.conf](https://i.imgur.com/zoFgNsM.png)
 
 [DNSCrypt](https://github.com/jedisct1/dnscrypt-proxy) is a piece of lightweight software that everyone should use to boost online privacy and security. It works by encrypting all DNS traffic between the user and DNS resolver, preventing any spying, spoofing or man-in-the-middle attacks.
 
-[Unbound](https://www.unbound.net/) is a validating, recursive, and caching DNS resolver. 
+[Unbound](https://www.unbound.net/) is a validating, recursive, and caching DNS resolver.
 
 [NirCmd](http://www.nirsoft.net/utils/nircmd.html) is a small command-line utility that allows you to do some useful tasks without displaying any user interface.
 
@@ -148,7 +151,7 @@ usage:  unbound [options]
 	file format is described in unbound.conf(5).
 -d	do not fork into the background.
 -v	verbose (more times to increase verbosity)
--w opt	windows option: 
+-w opt	windows option:
    	install, remove - manage the services entry
    	service - used to start from services control panel
 Version 1.6.1
